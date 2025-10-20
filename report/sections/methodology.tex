@@ -1,1 +1,117 @@
-\chapter{Methodology}
+\chapter{Methodology}\label{ch:methodology}
+
+In general, a standard methodology for such projects follows a linear process — loading the dataset, visualizing it,
+performing data cleaning and preprocessing, training models, and finally generating the submission outputs.
+
+However, building upon insights from our previous works on similar data pipelining tasks, this procedure has evolved
+into a more mature and iterative framework.
+For instance, data visualization is no longer treated as a standalone phase; instead, it is an ongoing activity
+integrated throughout the entire workflow — from data loading and preprocessing to model training and evaluation.
+This continuous visualization strategy enables early detection of anomalies and fosters a deeper understanding of
+model–data interactions at every stage. \cite{DNN_Anirudh,DNN_Shreya}
+
+Furthermore, the need for abstraction and modularity becomes evident in a comparative study involving multiple models
+and experiments.
+Several experiments share similar configurations or preprocessing routines, and to handle this efficiently, we employ
+helper methods and modular utilities that encapsulate repeated processes.
+This abstraction ensures code clarity, reduces redundancy, and simplifies experimentation.
+
+In this report, we also present a custom pipelining infrastructure designed to enhance transparency and control over
+each step of the process.
+Unlike the conventional scikit-learn pipeline, our system provides richer insights into the effectiveness of individual
+preprocessing strategies, offering fine-grained visualization of their impact on model performance.
+
+Lastly, leveraging lessons from earlier projects, we maintain rigorous control over key reproducibility aspects such as
+random seed management, model versioning, and grid search configurations, ensuring consistent and reliable
+experimentation across runs.
+
+
+\section{Dataset Description}\label{sec:dataset-description}
+The data loading phase follows a straightforward and minimal approach.
+The primary dataset is loaded into \texttt{\{ds\_source\}} and the submission dataset into \texttt{\{ds\_test\}}.
+An additional preprocessing step involved renaming the column \texttt{family\_history\_with\_overweight} to \texttt{FHWO}, aligning it with the naming style of other acronym-based attributes.
+This minor modification simplifies table formatting, improves readability, and ensures consistency across visualizations and statistical summaries.
+
+
+\section{Exploratory Data Analysis (EDA)}\label{sec:exploratory-data-analysis}
+The exploratory data analysis phase focuses on identifying missing values, outliers, and other statistical anomalies within the dataset.
+Although this section might seem procedural, its objective extends beyond aesthetic visualization — it aims to extract meaningful insights that guide the subsequent data processing and modeling stages.
+A variety of plots and summary statistics are generated to ensure comprehensive understanding of data distributions, correlations, and feature relationships.
+Care has been taken to emphasize interpretability, ensuring that each visualization contributes to a deeper comprehension of the dataset rather than serving as mere decoration.
+
+
+\section{Data Preprocessing}\label{sec:data-preprocessing}
+The preprocessing phase is directly informed by the inferences drawn from the EDA stage.
+Instead of mutating the original data source, all preprocessing operations are encapsulated within modular units known as \textbf{Pipeline Operations (POPs)}.
+Each POP defines a specific transformation that can be applied to the data, allowing the entire preprocessing sequence to remain both traceable and reversible.
+
+During model training, these chosen POPs are combined into structured pipelines, and the transformed data is used for subsequent train–validation analysis.
+This design ensures that the preprocessing remains flexible and that alternative transformations can be evaluated without altering the original dataset.
+Additionally, each POP provides visualization feedback to help assess whether the transformation yields any measurable improvement in data quality or model performance.
+
+
+\section{Setups and Helpers}\label{sec:setups-and-helpers}
+Although this section does not directly appear in the final report, it plays a foundational role within the notebook implementation.
+Executed immediately after the import statements, it handles several preliminary configurations essential for smooth experimentation.
+These include:
+\begin{itemize}
+    \item Initialization of the notification and logging system.
+    \item PyPlot and visualization styling adjustments.
+    \item Random seed management for reproducibility.
+    \item Notebook display and formatting controls.
+    \item Model training, saving, and submission automation.
+    \item Definition and registration of POP operations.
+\end{itemize}
+
+\subsection{Pipeline Operations (POPs)}\label{subsec:pipeline-operations-(pops)}
+Each POP is implemented as a modular function that takes one data object (with optional configuration parameters) and returns a tuple containing the transformation configuration and the processed dataset.
+This design encourages composability and experimentation across different transformation strategies.
+
+The implemented POPs include:
+\begin{itemize}
+    \item \texttt{pop\_drop\_column}
+    \item \texttt{pop\_log\_transform}
+    \item \texttt{pop\_root\_transform}
+    \item \texttt{pop\_box\_cox\_transform}
+    \item \texttt{pop\_one\_hot\_encode}
+    \item \texttt{pop\_soft\_ohe}
+    \item \texttt{pop\_binarize}
+    \item \texttt{pop\_standardize}
+    \item \texttt{pop\_minmax}
+    \item \texttt{pop\_ordinal\_encode}
+    \item \texttt{pop\_round}
+    \item \texttt{pop\_derived\_features}
+\end{itemize}
+
+This modular approach enables quick mixing and matching of transformations, facilitating the discovery of the most effective combinations through systematic experimentation.
+
+\subsection{Helper Utilities}\label{subsec:helper-utilities}
+The POP infrastructure is supported by several helper functions designed to streamline experimentation:
+\begin{itemize}
+    \item \texttt{compose\_pop} – Combine multiple POPs into a single unified operation.
+    \item \texttt{prepare\_pop} – Finalize a POP by fixing its configuration parameters.
+    \item \texttt{select\_pipeline\_variation} – Choose the most promising pipeline configuration among various permutations.
+    \item \texttt{apply\_pipeline} – Apply a series of pipeline variations to the dataset and evaluate their effects.
+\end{itemize}
+
+\subsection{Specialized POPs}\label{subsec:specialized-pops}
+Among the implemented transformations, two POPs deserve particular mention:
+\begin{itemize}
+    \item \textbf{\texttt{pop\_soft\_ohe}} – Performs a “soft” one-hot encoding for features exhibiting discrete peaks within an otherwise continuous distribution.
+    For example, in the \texttt{CH2O} feature, distinct spikes occur at values 1, 2, and 3.
+    This transformation isolates these regions, creating dedicated features that capture each peak more effectively.
+
+    \item \textbf{\texttt{pop\_derived\_features}} – Generates higher-level features derived from existing columns.
+    These features capture latent relationships and health-related indicators such as:
+    \begin{itemize}
+        \item \texttt{BMI}
+        \item \texttt{Water\_Intake\_per\_Meal}
+        \item \texttt{Activity\_to\_Tech\_Ratio}
+        \item \texttt{Healthy\_Lifestyle\_Score}
+        \item \texttt{Has\_FamilyRisk\_and\_FAVC}
+        \item \texttt{Calorie\_Monitoring\_Interaction}
+    \end{itemize}
+\end{itemize}
+
+Together, these components establish a robust experimental foundation, ensuring every transformation and pipeline decision can be systematically analyzed and reproduced.
+

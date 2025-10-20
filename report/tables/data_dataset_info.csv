@@ -1,0 +1,19 @@
+Column Name,Description,Non-Null Count,Data Type
+id,Entity Identifier,15533,int64
+Gender,Gender,15533,object
+Age,Age,15533,float64
+Height,Height,15533,float64
+Weight,Weight,15533,float64
+FHWO,Family History With Overweight,15533,object
+FAVC,High Caloric Food Consumption Freq.,15533,object
+FCVC,Vegetables Consumption Freq.,15533,float64
+NCP,Main Meals Count,15533,float64
+CAEC,Consumption of Food Between Meals,15533,object
+SMOKE,Smoke,15533,object
+CH2O,Consumption of Water Daily,15533,float64
+SCC,Calories Consumption Monitoring,15533,object
+FAF,Physical Activity Freq.,15533,float64
+TUE,Time using Technology Devices,15533,float64
+CALC,Consumption of alcohol,15533,object
+MTRANS,Modes of Transportation Used,15533,object
+WeightCategory,Weight Category,15533,object

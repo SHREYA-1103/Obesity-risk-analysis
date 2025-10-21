@@ -8,7 +8,7 @@ Each subsection summarizes visual analyses and their corresponding insights.
 
 
 \section{Missing Value Detection}\label{sec:missing-value-detection}
-\importTableFigure{tables/data_eda_missing_counts.csv}{Missing Counts}{eda_missing_counts}
+\importTableFigure{"tables/data_eda_missing_counts.csv"}{Missing Counts}{eda_missing_counts}
 \textbf{Observation:} There is not a single missing value in any of the columns.\\
 \textbf{Inference:} The dataset is well-structured and complete.
 No imputation, removal, or flagging of missing values is required.
@@ -17,7 +17,7 @@ No imputation, removal, or flagging of missing values is required.
 
 
 \section{Outlier Detection}\label{sec:outlier-detection}
-\importTableFigure{tables/data_eda_outlier_counts.csv}{Outlier Counts}{eda_outlier_counts}
+\importTableFigure{"tables/data_eda_outlier_counts.csv"}{Outlier Counts}{eda_outlier_counts}
 \textbf{Observation:} \textit{Age} and \textit{NCP} exhibit a significant number of values outside the interquartile range (IQR).\\
 \textbf{Inference:} The presence of a large proportion of outliers suggests potential issues in data distribution.
 However, dropping or imputing such a large portion of data would not be recommended.

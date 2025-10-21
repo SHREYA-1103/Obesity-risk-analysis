@@ -8,23 +8,23 @@
 \newcommand{\E}{\mathbb{E}}
 \newcommand{\Var}{\mathrm{Var}}
 
-\newcommand{\importTableFigure}[3]{{
+\newcommand{\importTableFigure}[3]{
+    \begin{figure}[ht]
     \renewcommand{\arraystretch}{0.9}
     \setlength{\tabcolsep}{3pt}
-    \begin{figure}[ht]
     \centering
     \footnotesize
     \csvautobooktabular[
-        head to column names,
-        respect all,
-        table head=\toprule\csvlinetotablerow\\\midrule,
-        table foot=\\\bottomrule,
-        before line=\bfseries,
+    respect all,
+%    late after line=\\,
+    table head=\toprule\csvlinetotablerow\\\midrule,
+    table foot=\\\bottomrule,
+    before line=\bfseries
     ]{#1}
     \caption{#2}
     \label{table:#3}
     \end{figure}
-}}
+}
 
 \newcommand{\importPlotFigure}[3]{%
         {%

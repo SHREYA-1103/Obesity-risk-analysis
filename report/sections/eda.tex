@@ -1,35 +1,103 @@
 \chapter{Exploratory Data Analysis}\label{ch:exploratory-data-analysis}
 
+This section presents a detailed exploratory data analysis of the dataset.
+We examine data completeness, outlier presence, feature distributions, and sensitivity to extreme values.
+Each subsection summarizes visual analyses and their corresponding insights.
+
+%----------------------------------------------------------------
 
 
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=0.5\textwidth]{figures/plot_Feature Distribution (Numerical)}
-    \caption{TODO}
-    \label{fig:feature_distribution_numerical)}
-\end{figure}
+\section{Missing Value Detection}\label{sec:missing-value-detection}
+\importTableFigure{tables/data_eda_missing_counts.csv}{Missing Counts}{eda_missing_counts}
+\textbf{Observation:} There is not a single missing value in any of the columns.\\
+\textbf{Inference:} The dataset is well-structured and complete.
+No imputation, removal, or flagging of missing values is required.
+
+%----------------------------------------------------------------
 
 
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=0.5\textwidth]{figures/plot_Feature Distribution (Discrete)}
-    \caption{TODO}
-    \label{fig:feature_distribution_discrete)}
-\end{figure}
+\section{Outlier Detection}\label{sec:outlier-detection}
+\importTableFigure{tables/data_eda_outlier_counts.csv}{Outlier Counts}{eda_outlier_counts}
+\textbf{Observation:} \textit{Age} and \textit{NCP} exhibit a significant number of values outside the interquartile range (IQR).\\
+\textbf{Inference:} The presence of a large proportion of outliers suggests potential issues in data distribution.
+However, dropping or imputing such a large portion of data would not be recommended.
+
+%----------------------------------------------------------------
 
 
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=0.5\textwidth]{figures/plot_Feature Spread (Numerical)}
-    \caption{TODO}
-    \label{fig:feature_spread_numerical)}
-\end{figure}
+\section{Feature Distribution (Numerical)}\label{sec:feature-distribution-numerical}
+\importPlotFigure{figures/plot_Feature Distribution (Numerical).png}{Numerical Features Distribution}{feature_distribution_numerical}
+
+\textbf{Observation:}
+\begin{itemize}
+    \item \textit{Age} is moderately right-skewed, with most samples between 18–30 years.
+    \item \textit{Height} and \textit{Weight} follow near-unimodal distributions; \textit{Weight} shows slight multimodality.
+    \item Remaining features (\textit{FCVC}, \textit{NCP}, \textit{CH20}, \textit{FAF}, \textit{TUE}) exhibit distinct multimodality.
+    \item \textit{FAF} (Physical Activity) is heavily right-skewed, dominated by low activity levels.
+\end{itemize}
+
+\textbf{Inference:}
+The dataset combines continuous-like variables (\textit{Age, Height, Weight}) and discrete ordinal features (\textit{FCVC, NCP, CH20, TUE}).
+Response clustering indicates limited variation within several behavior-related attributes.
+
+%----------------------------------------------------------------
 
 
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=0.5\textwidth]{figures/plot_Outlier Sensitivity (Numerical)}
-    \caption{TODO}
-    \label{fig:outlier_sensitivity_numerical)}
-\end{figure}
+\section{Feature Distribution (Discrete)}\label{sec:feature-distribution-(discrete)}
+\importPlotFigure{figures/plot_Feature Distribution (Discrete).png}{Discrete Features Distribution}{feature_distribution_discrete}
+
+\textbf{Observation:}
+\begin{itemize}
+    \item \textit{Gender} is well-balanced.
+    \item \textit{FHWO} and \textit{FAVC} show moderate skew towards “Yes”.
+    \item \textit{SMOKE} and \textit{SCC} are highly skewed towards “No”.
+    \item \textit{CAEC}, \textit{CALC}, and \textit{MTRANS} exhibit multi-category skewness.
+\end{itemize}
+
+\textbf{Inference:}
+The population largely consists of individuals with a family history of overweight and high-calorie food habits, who rarely smoke or monitor calorie intake.
+Public transport and occasional alcohol consumption are dominant lifestyle traits.
+
+%----------------------------------------------------------------
+
+
+\section{Feature Spread (Numerical)}\label{sec:feature-spread-(numerical)}
+\importPlotFigure{figures/plot_Feature Spread (Numerical).png}{Numerical Feature Spread}{feature_spread_numerical}
+
+\textbf{Observation:}
+\begin{itemize}
+    \item \textit{Age} shows concentrated distribution with long-tailed outliers up to 60s.
+    \item \textit{Height} and \textit{Weight} display symmetric spread with minimal outliers.
+    \item \textit{NCP} has a narrow IQR around 3 with widespread outliers.
+    \item \textit{FCVC, CH20, FAF, TUE} have wide IQRs, suggesting diverse behaviors.
+\end{itemize}
+
+\textbf{Inference:}
+Age and NCP exhibit concentrated cores surrounded by extreme values, while most other features show healthy spread.
+This implies data variance primarily arises from behavioral rather than physical features.
+
+%----------------------------------------------------------------
+
+
+\section{Outlier Sensitivity (Numerical)}\label{sec:outlier-sensitivity-(numerical)}
+\importPlotFigure{figures/plot_Outlier Sensitivity (Numerical).png}{Numerical Outlier Sensitivity}{outlier_sensitivity_numerical}
+
+\textbf{Observation:}
+\begin{itemize}
+    \item \textit{Weight} and \textit{Age} show the highest deviation from the median.
+    \item \textit{Height} has near-zero sensitivity.
+    \item Other numerical features remain within a stable deviation range.
+\end{itemize}
+
+\textbf{Inference:}
+\textit{Weight} and \textit{Age} are the most outlier-sensitive variables and will require focused treatment in the preprocessing phase.
+\textit{Height} and other features remain largely robust.
+
+%----------------------------------------------------------------
+
+
+\section*{Summary of EDA Findings}
+The dataset exhibits strong completeness and reasonable diversity across both physical and behavioral variables.
+While outliers are present in \textit{Age} and \textit{NCP}, most features show stable distributions.
+The observations suggest that feature scaling and selective outlier handling will enhance model robustness without major data loss.
 

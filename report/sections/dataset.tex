@@ -1,1 +1,26 @@
 \chapter{Dataset Description}\label{ch:dataset-description}
+
+
+The dataset used in this study, titled \textit{Obesity or CVD Risk (Classify)}, contains information from 15,533 individuals aged between 14 and 61 from Mexico, Peru, and Colombia.
+The data were collected using an online survey assessing demographic information, eating habits, and physical condition.
+The dataset includes 18 columns: 16 features, 1 target variable (\texttt{NObesity}), and 1 identifier column.
+
+The features are grouped as follows:
+
+\begin{enumerate}
+    \item \textbf{Demographic variables:} Gender, Age, Height, Weight.
+    \item \textbf{Eating habits:} Frequent consumption of high-caloric food (FAVC), Frequency of vegetable consumption (FCVC), Number of main meals (NCP), Food consumption between meals (CAEC), Water consumption (CH20), Alcohol consumption (CALC).
+    \item \textbf{Physical condition:} Calories consumption monitoring (SCC), Physical activity frequency (FAF), Time using technology devices (TUE), Transportation method (MTRANS).
+\end{enumerate}
+
+The dataset contains both numerical and categorical data, enabling analysis using classification, regression, clustering, and association algorithms.
+
+\importTableFigure{tables/data_dataset_statistics.csv}{Dataset Summary Statistics}{data_dataset_statistics}
+
+\importTableFigure{tables/data_dataset_info.csv}{Dataset Information (Structure Overview)}{data_dataset_info}
+
+\importTableFigure{tables/data_dataset_dtypes.csv}{Feature Data Types}{data_dataset_dtypes}
+
+%\importTableFigure{tables/data_dataset_head.csv}{Sample Data Records}{data_dataset_head}
+
+\importTableFigure{tables/data_dataset_describe.csv}{Statistical Summary of Features}{data_dataset_describe}

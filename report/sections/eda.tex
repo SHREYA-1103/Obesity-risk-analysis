@@ -19,8 +19,23 @@ No imputation, removal, or flagging of missing values is required.
 \section{Outlier Detection}\label{sec:outlier-detection}
 \importTableFigure{"tables/data_eda_outlier_counts.csv"}{Outlier Counts}{eda_outlier_counts}
 \textbf{Observation:} \textit{Age} and \textit{NCP} exhibit a significant number of values outside the interquartile range (IQR).\\
-\textbf{Inference:} The presence of a large proportion of outliers suggests potential issues in data distribution.
-However, dropping or imputing such a large portion of data would not be recommended.
+\textbf{Inference:}
+The presence of a large proportion of outliers suggests potential issues in the data distribution.
+However, dropping or imputing such a large portion of data would not be recommended, as it could lead to the loss of valuable variance and distort the underlying population structure.
+Instead of aggressively removing these data points, a more balanced approach was adopted to preserve data diversity while improving model generalization.
+
+To address class imbalance and enhance the dataset’s representativeness, oversampling using the Synthetic Minority Oversampling Technique (SMOTE) was applied.
+This technique increased the total number of samples from approximately 15,000 to 20,000, effectively improving the model’s ability to learn from minority classes.
+Interestingly, even for the best-performing model— XGBoost—SMOTE contributed to nearly a 3\% improvement in accuracy, indicating that data balancing played a crucial role in enhancing classification performance.
+
+Although experiments were conducted by removing extreme outliers and retraining the models, the results showed a decline in generalization capability.
+The models trained on the cleaned dataset performed well on training data but failed to maintain consistent accuracy on validation and test sets.
+This behavior suggested that the apparent outliers might, in fact, carry meaningful variations essential for capturing the inherent noise and diversity within the dataset.
+
+Moreover, it is important to note that the Obesity–CVD Risk dataset used in this project was itself derived through oversampling and controlled noise addition to an original dataset of around 2,000 data points.
+Therefore, a certain degree of randomness and non-uniformity in feature distributions was expected.
+These artificial augmentations were introduced to expand the dataset and prevent overfitting during model training.
+Consequently, preserving mild outlier behavior aligned with the dataset’s generative nature and ensured that the model learned to handle noisy, realworld data effectively.
 
 %----------------------------------------------------------------
 

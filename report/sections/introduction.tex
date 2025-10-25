@@ -5,13 +5,13 @@ Cardiovascular diseases (CVDs) continue to be the leading cause of death across 
 They represent a group of disorders of the heart and blood vessels that often arise due to a combination of genetic, metabolic, and lifestyle-related factors.
 Among these, obesity has emerged as one of the most significant risk factors.
 Obesity is a complex medical condition characterized by excessive accumulation of body fat, typically resulting from an imbalance between calorie intake and energy expenditure.
-It contributes to various metabolic disturbances such as high blood pressure, elevated cholesterol levels, insulin resistance, and inflammation—all of which are strongly associated with cardiovascular complications.
+It contributes to various metabolic disturbances such as high blood pressure, elevated cholesterol levels, insulin resistance, and inflammation-all of which are strongly associated with cardiovascular complications.
 The growing prevalence of obesity across all age groups and regions has made it a critical public health challenge.
 Consequently, the early prediction and prevention of CVDs among obese individuals have become an important area of research in both medicine and data science.
 
 Traditional approaches to cardiovascular risk assessment, such as the Framingham Risk Score or BMI-based methods, rely on fixed statistical formulas or thresholds derived from population studies.
 While these models are useful, they often oversimplify complex biological interactions and fail to account for nonlinear relationships between multiple risk factors.
-In contrast, modern machine learning (ML) methods have demonstrated significant potential in analyzing large, multidimensional datasets to uncover intricate patterns that might not be visible through classical techniques.
+In contrast, \textbf{modern machine learning (ML)} methods have demonstrated significant potential in analyzing large, multidimensional datasets to uncover intricate patterns that might not be visible through classical techniques.
 By learning from data, ML models can automatically adapt to complex relationships between variables and generate accurate, data-driven predictions.
 This makes them especially valuable in healthcare, where early diagnosis and risk prediction can directly improve patient outcomes and reduce healthcare burdens.
 
@@ -20,34 +20,32 @@ ML models have been successfully employed in various domains such as cancer dete
 These models leverage data collected from clinical measurements, imaging, laboratory results, and lifestyle attributes to identify patterns indicative of disease presence or progression.
 For conditions like CVD, which develop gradually and involve multiple interacting risk factors, machine learning can serve as an intelligent support system that helps in early detection and timely intervention.
 It allows for individualized risk stratification, where personalized recommendations can be made based on the patient’s unique health profile.
-
 The motivation for this project arises from the need to create a reliable, data-driven prediction model that can identify cardiovascular disease risk using obesity-related parameters.
 With an increase in sedentary lifestyles, unhealthy eating habits, and stress levels, obesity rates have surged globally, making cardiovascular diseases a frequent consequence.
 However, due to the complex nature of these conditions, predicting who is at risk remains a challenge.
 Therefore, this project aims to develop and evaluate several machine learning models that can predict CVD risk accurately by learning from obesity-linked behavioral and physiological factors.
 Such predictive systems can act as powerful tools for public health agencies, fitness platforms, and healthcare professionals by enabling early risk identification and facilitating preventive care strategies.
 
-The dataset used in this study comprises a combination of demographic, behavioral, and physical health attributes associated with obesity and cardiovascular conditions.
+The dataset used in this study comprises a combination of \textbf{demographic, behavioral, and physical health attributes} associated with obesity and cardiovascular conditions.
 It includes features such as age, gender, dietary habits, water intake, frequency of vegetable consumption, physical activity level, and other health indicators.
 Since the dataset contains both numerical and categorical data, it provides an excellent opportunity to explore comprehensive preprocessing and transformation strategies.
-The first step involved conducting an Exploratory Data Analysis (EDA) to understand the underlying structure and characteristics of the data.
+The first step involved conducting an \textbf{Exploratory Data Analysis (EDA)} to understand the underlying structure and characteristics of the data.
 This included examining dataset dimensions, column types, summary statistics, and distribution patterns.
 Handling missing values and detecting outliers were essential parts of this phase to ensure that the data quality was suitable for model training.
 Visualizations such as box plots and histograms were employed to observe outlier behavior and assess normality in distributions.
-
 After understanding the data, transformations were performed to improve model compatibility and performance.
-Skewed numerical variable like Age was subjected to Box–Cox transformation, which helps stabilize variance and normalize distributions.
+Skewed numerical variable like Age was subjected to \textbf{Box–Cox transformation}, which helps stabilize variance and normalize distributions.
 This is particularly beneficial for algorithms that assume Gaussian distributions, such as logistic regression.
 For categorical features, encoding techniques were applied depending on the model type.
-One-Hot Encoding (OHE) was used for logistic regression to prevent imposing any ordinal relationship among categories, whereas Label Encoding was applied for tree-based models such as Random Forest, XGBoost, and LightGBM, which can handle categorical features directly and are not sensitive to arbitrary label values.
-Since imbalanced datasets are common in medical predictions—where one class (e.g., healthy individuals) often dominates over another (e.g., individuals with disease)— Synthetic Minority Oversampling Technique (SMOTE) was employed to balance the class distribution.
+\textbf{One-Hot Encoding (OHE)} was used for logistic regression to prevent imposing any ordinal relationship among categories, whereas \textbf{Label Encoding} was applied for tree-based models such as Random Forest, XGBoost, and LightGBM, which can handle categorical features directly and are not sensitive to arbitrary label values.
+Since imbalanced datasets are common in medical predictions-where one class (e.g., healthy individuals) often dominates over another (e.g., individuals with disease)- \textbf{Synthetic Minority Oversampling Technique (SMOTE)} was employed to balance the class distribution.
 This approach synthetically generates new samples for the minority class based on feature-space similarities, ensuring that all models receive balanced training data and reducing bias toward the majority class.
-Data scaling was also performed using Standard Scaler to normalize numerical feature ranges, preventing features with large magnitudes from dominating others during model training.
+Data scaling was also performed using \textbf{Standard Scaler} to normalize numerical feature ranges, preventing features with large magnitudes from dominating others during model training.
 
 The core objective of this project was to design a robust pipeline for model training and evaluation using multiple machine learning algorithms.
-Various models were tested, including Logistic Regression, Decision Tree, Random Forest, AdaBoost, K-Nearest Neighbors (KNN), Naïve Bayes, XGBoost, and LightGBM. To achieve fair and optimal comparisons, hyperparameter tuning was carried out for each model.
+Various models were tested, including \textbf{Logistic Regression, Decision Tree, Random Forest, AdaBoost, K-Nearest Neighbors (KNN), Naïve Bayes, XGBoost, and LightGBM}. To achieve fair and optimal comparisons, hyperparameter tuning was carried out for each model.
 Grid Search Cross-Validation was applied for models such as Logistic Regression, Decision Tree, Random Forest, AdaBoost, KNN, and Naïve Bayes to systematically explore parameter combinations and identify the configuration that yielded the highest validation accuracy.
-For advanced ensemble models such as XGBoost and LightGBM, the Optuna framework was utilized.
+For advanced ensemble models such as \textbf{XGBoost and LightGBM, the Optuna} framework was utilized.
 Optuna provides an efficient and automated optimization process that uses Bayesian sampling and pruning techniques, allowing faster convergence toward the best-performing hyperparameters.
 Stratified K-Fold Cross-Validation was also implemented to ensure that each fold maintained the same class distribution as the original dataset, leading to reliable and unbiased performance estimates.
 
@@ -55,14 +53,14 @@ The prepared data was divided into training, validation, and testing subsets.
 Each model was trained on the training data and validated using cross-validation to monitor consistency.
 After hyperparameter optimization, the models were tested on unseen data to evaluate generalization.
 The final step involved making predictions on a separate test dataset for Kaggle submission, where accuracy was calculated to measure real-world applicability.
-Among all models tested, XGBoost achieved the highest accuracy of ~93.25\%, outperforming other algorithms in terms of precision and stability.
+Among all models tested, \textbf{XGBoost achieved the highest accuracy of ~93.25\%}, outperforming other algorithms in terms of precision and stability.
 The strong performance of XGBoost can be attributed to its gradient-boosting framework, regularization techniques, and ability to capture non-linear feature interactions effectively.
 The results of this study highlight the importance of rigorous preprocessing, feature transformation, and hyperparameter tuning in improving predictive performance.
-Each step in the pipeline—from data cleaning and encoding to model optimization— played a critical role in achieving high accuracy.
+Each step in the pipeline-from data cleaning and encoding to model optimization- played a critical role in achieving high accuracy.
 Moreover, the comparison between models revealed that ensemble techniques like XGBoost and LightGBM outperform simpler models because they can learn from multiple weak learners to produce a strong final prediction.
 These findings align with existing research trends in healthcare analytics, where gradient boosting models are widely used for medical risk assessment due to their robustness and interpretability.
 
-Beyond model performance, the significance of this project lies in its potential realworld applications.
+Beyond model performance, the significance of this project lies in its potential \textbf{realworld applications}.
 Accurate risk prediction systems can serve as early-warning tools that empower individuals and healthcare providers to take preventive measures before severe complications arise.
 Integrating such models into healthcare platforms or wearable health-tracking applications can promote personalized medicine, continuous monitoring, and data-driven interventions.
-Furthermore, this project demonstrates a generalizable framework for handling complex health datasets— combining EDA, data transformation, feature engineering, class balancing, and model optimization—that can be extended to other domains such as diabetes detection, nutrition assessment, and metabolic disorder prediction.
+Furthermore, this project demonstrates a generalizable framework for handling complex health datasets- combining EDA, data transformation, feature engineering, class balancing, and model optimization-that can be extended to other domains such as diabetes detection, nutrition assessment, and metabolic disorder prediction.

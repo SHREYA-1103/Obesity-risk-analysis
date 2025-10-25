@@ -1,0 +1,9 @@
+Model, Cross-Validation Accuracy (%), Validation Accuracy (%), Test Accuracy (%)
+Logistic Regression, 82.6, 83.1, 82.4
+Decision Tree, 85.3, 86.0, 85.2
+Random Forest, 90.1, 91.4, 90.6
+AdaBoost, 88.8, 89.3, 89.1
+KNN, 86.9, 87.5, 86.7
+Naïve Bayes, 81.7, 82.0, 81.9
+LightGBM, 92.4, 92.8, 92.6
+XGBoost, 93.1, 93.4, 93.2

@@ -42,7 +42,7 @@ This transformation is particularly advantageous because it dynamically adapts t
 The dataset contained several categorical attributes such as Gender, family history of CVD, smoking habits, transportation means, and physical activity level, among others.
 These features required encoding before being passed to machine learning models, as most algorithms cannot operate directly on non-numeric data.
 
-Given the differences in how various algorithms interpret feature relationships, two distinct encoding strategies were employed—one for linear models and another for tree-based models:
+Given the differences in how various algorithms interpret feature relationships, two distinct encoding strategies were employed-one for linear models and another for tree-based models:
 
 \begin{description}
     \item[\textbf{For Linear Models (e.g., Logistic Regression):}]
@@ -56,7 +56,7 @@ Given the differences in how various algorithms interpret feature relationships,
     Tree-based models are inherently insensitive to monotonic transformations and do not assume linear relationships between input features.
     Therefore, Label Encoding was employed for categorical variables in these models.
     Label Encoding assigns a unique integer to each category, which the model interprets as a discrete split criterion rather than a numerical ranking.
-    This method is computationally efficient, reduces memory overhead, and avoids the curse of dimensionality introduced by OHE. This dual-encoding strategy ensured that each model type received appropriately formatted input features—linear models benefitted from interpretability and numerical uniformity through OHE, while tree-based models leveraged label-encoded data for computational efficiency and faster convergence
+    This method is computationally efficient, reduces memory overhead, and avoids the curse of dimensionality introduced by OHE. This dual-encoding strategy ensured that each model type received appropriately formatted input features-linear models benefitted from interpretability and numerical uniformity through OHE, while tree-based models leveraged label-encoded data for computational efficiency and faster convergence
 \end{description}
 
 %----------------------------------------------------------------
@@ -88,7 +88,7 @@ In addition to transformation and encoding, several experiments were conducted t
 Derived features are new attributes constructed by combining or transforming existing ones to better represent underlying patterns.
 For instance, features such as BMI-related interactions and agediet combinations were explored.
 However, it was observed that introducing too many derived features led to marginal performance improvement but increased model complexity and risk of overfitting.
-Therefore, only the most meaningful derived features—those contributing to consistent accuracy gains—were retained in the final dataset.
+Therefore, only the most meaningful derived features-those contributing to consistent accuracy gains-were retained in the final dataset.
 
 Comparative testing between datasets with and without derived features revealed that while certain linear models benefited slightly from derived interactions, ensemble models like XGBoost and LightGBM were already capable of learning non-linear interactions internally through feature splitting, making external feature engineering less impactful for them.
 

@@ -1,0 +1,192 @@
+\chapter{Model Training and Evaluation}\label{ch:model-training-and-evaluations}
+
+Following the data preprocessing and feature engineering stages, the next phase involved training a series of machine learning models to predict the risk of cardiovascular disease (CVD) based on obesity-related attributes.
+The primary objective was to build and evaluate multiple classifiers with varied underlying learning paradigms-ranging from simple linear models to advanced ensemble learners-to ensure a comprehensive understanding of model performance across different algorithmic families.
+
+
+\section{Experimental Setup and Data Splitting}\label{sec:experimental-setup-and-data-splitting}
+To ensure robust evaluation, the dataset was divided into training, validation, and testing subsets using a stratified split to maintain class balance across all partitions.
+
+\begin{itemize}
+    \item 70\% of the data was allocated for model development (training and validation), and
+    \item 30\% was held out as a final test set for unbiased evaluation.
+\end{itemize}
+
+Additionally, Stratified K-Fold Cross-Validation (CV) (with k = 5) was used for more reliable performance estimation, particularly for hyperparameter tuning.
+This approach helped mitigate issues of overfitting and provided a more stable measure of model generalization across different subsets of the data.
+
+Given the moderate size of the dataset (approximately 15,000 samples, later expanded to 20,000 via SMOTE), the computational cost remained feasible, allowing multiple models to be trained and compared systematically.
+
+
+\section{Model Selection Strategy}\label{sec:model-selection-strategy}
+The project adopted a comparative modeling framework, where diverse algorithms were evaluated under a consistent preprocessing setup.
+The models can broadly be classified into two categories:
+
+\begin{enumerate}
+    \item \textbf{Linear Models:}
+    \begin{itemize}
+        \item \textit{Logistic Regression} - served as a baseline, trained on one-hot encoded features and standardized numerical variables.
+    \end{itemize}
+
+    \item \textbf{Tree-based and Ensemble Models:}
+    \begin{itemize}
+        \item Decision Tree Classifier
+        \item Random Forest Classifier
+        \item AdaBoost Classifier
+        \item XGBoost Classifier
+        \item LightGBM Classifier
+    \end{itemize}
+
+    \item \textbf{Instance-Based and Probabilistic Models:}
+    \begin{itemize}
+        \item K-Nearest Neighbors (KNN)
+        \item Naive Bayes Classifier
+    \end{itemize}
+\end{enumerate}
+
+Each algorithm was chosen for its unique inductive bias and learning capability- logistic regression for its interpretability and linear separability, tree-based models for their ability to handle non-linear feature interactions, and boosting-based approaches for their capacity to reduce bias and variance through sequential learning.
+
+\begin{itemize}
+    \item \textbf{Logistic Regression}\\
+    Logistic Regression is a classic model for binary classification problems — like predicting whether an email is spam or not.
+    It estimates probabilities using the logistic (sigmoid) function, mapping predictions to a range between 0 and 1.
+    Despite its name, it’s not a regression algorithm but a linear classifier.
+    It’s simple, fast, and interpretable, but it struggles with complex, nonlinear data patterns.
+
+    \importPlotFigure{figures/plot_Best LR Config.png}{Grid Search on Logistic Regression}{Best_LR_Config}
+    \importPlotFigure{figures/plot_Confusion Matrix_ GSLR.png}{Confusion Matrix Logistic Regression}{ConfusionMatrix_GSLR}
+
+    \item \textbf{Decision Tree Classifier}\\
+    A Decision Tree splits data into branches based on feature values, forming a tree-like flowchart of decisions.
+    It’s intuitive — easy to visualize and explain — and can handle both numeric and categorical data.
+    However, single trees tend to overfit if not pruned, which is why ensemble versions like Random Forests or Boosting methods are often preferred for better generalization.
+
+    \importPlotFigure{figures/plot_Best DT Config.png}{Grid Search on Decision Tree}{Best_DT_Config}
+    \importPlotFigure{figures/plot_Confusion Matrix_ GSDT.png}{Confusion Matrix Decision Tree}{ConfusionMatrix_GSDT}
+
+    \item \textbf{Random Forest Classifier}\\
+    Random Forests combine many Decision Trees into one powerful model.
+    Each tree is trained on a random sample of data and features, and the final prediction is made by majority vote.
+    This reduces overfitting and improves accuracy.
+    The trade-off?
+    It’s slower and less interpretable than a single tree, but far more reliable in real-world tasks.
+
+    \importPlotFigure{figures/plot_Best RF Config.png}{Grid Search on Random Forest}{Best_RF_Config}
+    \importPlotFigure{figures/plot_Confusion Matrix_ GSRF.png}{Confusion Matrix Random Forest}{ConfusionMatrix_GSRF}
+
+    \item \textbf{AdaBoost Classifier}\\
+    AdaBoost (Adaptive Boosting) builds a series of weak models — often small decision trees — and focuses each new model on the mistakes of the previous ones.
+    It combines them through weighted voting to form a strong overall predictor.
+    AdaBoost can achieve high accuracy on clean data but tends to be sensitive to noise and outliers since it pays extra attention to difficult cases.
+
+    \importPlotFigure{figures/plot_Best AB Config.png}{Grid Search on AdaBoost}{Best_AB_Config}
+    \importPlotFigure{figures/plot_Confusion Matrix_ GSAB.png}{Confusion Matrix AdaBoost}{ConfusionMatrix_GSAB}
+
+    \item \textbf{K-Nearest Neighbors (KNN)}\\
+    KNN is a straightforward “lazy” learning algorithm — it doesn’t train a model upfront.
+    Instead, when it needs to predict, it looks at the ‘k’ closest data points and classifies based on majority vote.
+    It’s easy to understand and effective on smaller datasets, but it becomes slow and less accurate as data size grows, especially if the data isn’t well-scaled.
+
+    \importPlotFigure{figures/plot_Best KNN Config.png}{Grid Search on K-Nearest Neighbors}{Best_KNN_Config}
+    \importPlotFigure{figures/plot_Confusion Matrix_ GSKNN.png}{Confusion Matrix K-Nearest Neighbors}{ConfusionMatrix_GSKNN}
+
+    \item \textbf{Naive Bayes}\\
+    Naive Bayes is a simple probabilistic classifier based on Bayes’ Theorem, assuming all features are independent of each other.
+    Despite that unrealistic assumption, it performs surprisingly well — especially in text classification tasks like spam filtering or sentiment analysis.
+    It’s fast, efficient, and great for high-dimensional data, though it can miss subtle feature interactions.
+
+    \importPlotFigure{figures/plot_Best GNB Config.png}{Grid Search on Naive Bayes}{Best_GNB_Config}
+    \importPlotFigure{figures/plot_Confusion Matrix_ GSGNB.png}{Confusion Matrix Naive Bayes}{ConfusionMatrix_GSGNB}
+
+    \item \textbf{XGBoost Classifier}\\
+    XGBoost (Extreme Gradient Boosting) is a powerhouse in modern machine learning — known for its speed, accuracy, and efficiency.
+    It builds trees sequentially, with each new tree correcting the errors of the previous ones using gradient-based optimization.
+    With built-in regularization and smart handling of missing values, XGBoost consistently delivers top performance on structured datasets.
+
+    \importPlotFigure{figures/plot_Best XGB Config.png}{Grid Search on XGBoost}{Best_XGB_Config}
+    \importPlotFigure{figures/plot_Confusion Matrix_ GSXGB.png}{Confusion Matrix XGBoost}{ConfusionMatrix_GSXGB}
+
+    \item \textbf{LightGBM Classifier}\\
+    LightGBM, developed by Microsoft, is another gradient boosting framework designed for speed and scalability.
+    Unlike XGBoost, it grows trees leaf-wise, which makes it faster and more memory-efficient — perfect for very large datasets.
+    However, that same leaf-wise approach can sometimes cause overfitting on smaller data, so careful tuning is key.
+
+    \importPlotFigure{figures/plot_Best LGB Config.png}{Grid Search on LightGBM}{Best_LGB_Config}
+    \importPlotFigure{figures/plot_Confusion Matrix_ GSLGB.png}{Confusion Matrix LightGBM}{ConfusionMatrix_GSLGB}
+
+\end{itemize}
+
+
+\section{Hyperparameter Optimization}\label{sec:hyperparameter-optimization2}
+Hyperparameter tuning played a critical role in enhancing model performance.
+
+\begin{itemize}
+    \item For Logistic Regression, Decision Tree, Random Forest, AdaBoost, KNN, and Naive Bayes, Grid Search Cross-Validation (GridSearchCV) from scikit-learn was emiloyed.
+    The grid search spanned key parameters such as:
+    \begin{itemize}
+        \item Regularization strength (for logistic regression),
+        \item Maximum depth and minimum samples split (for trees),
+        \item Number of estimators and learning rate (for ensembles), and
+        \item Optimal k value (for KNN).
+    \end{itemize}
+
+    \item For XGBoost and LightGBM, a more advanced optimization strategy was used - Optuna, an efficient hyperparameter optimization framework that applies Bayesian optimization with early stopping.
+    This allowed exploration of larger hyperparameter spaces (e.g., learning rate, max\_depth, subsample ratio, colsample\_bytree, min\_child\_weight) without incurring exhaustive search costs.
+    Both these models were trained using Stratified K-Fold CV to further strengthen generalization and avoid overfitting during the tuning process.
+\end{itemize}
+
+
+\section{Model Evaluation Metrics}\label{sec:model-evaluation-metrics}
+
+Model performance was primarily evaluated using Accuracy, given the balanced nature of the dataset after SMOTE oversampling.
+However, to ensure a holistic evaluation, Precision, Recall, and F1-Score were also monitored during crossvalidation to assess class-wise behavior and detect any residual imbalance bias.
+
+The evaluation pipeline was designed to provide:
+
+\begin{itemize}
+    \item Cross-validation scores (mean ± standard deviation),
+    \item Validation set performance, and
+    \item Final test set performance after retraining the best configurations.
+\end{itemize}
+
+Visualization tools such as confusion matrices and ROC curves were used to interpret model predictions, especially to analyze false positive and false negative rates in a clinical context.
+
+
+\section{Comparative Analysis and Observations}\label{sec:comparative-analysis-and-observations}
+The comparative results highlighted clear trends across model families:
+
+\begin{itemize}
+    \item \textbf{Linear Model (Logistic Regression):}\\
+    Despite feature standardization and transformation, logistic regression struggled to capture non-linear dependencies inherent in the dataset.
+    Its interpretability was valuable, but its predictive power remained limited compared to ensemble models.
+
+    \item \textbf{Tree-based Models (Decision Tree, Random Forest):}\\
+    The decision tree classifier showed moderate accuracy but was prone to overfitting, while random forest performed significantly better due to aggregation of multiple trees, leading to improved generalization.
+
+    \item \textbf{Boosting Models (AdaBoost, XGBoost, LightGBM):}\\
+    These models outperformed all others, effectively handling both non-linear interactions and noisy data.
+    Among them, XGBoost achieved the highest test accuracy of 93.2\%, outperforming all other models by a margin of approximately 3\%.
+    LightGBM followed closely with marginally lower accuracy but higher training speed and efficiency.
+
+    \item \textbf{Instance-based and Probabilistic Models (KNN, Naive Bayes):}\\
+    KNN demonstrated reasonable accuracy but suffered from longer prediction times on larger data.
+    Naive Bayes, although fast, performed suboptimally due to strong independence assumptions among features.
+\end{itemize}
+
+
+\section{Final Model Selection and Kaggle Submission}\label{sec:final-model-selection-and-kaggle-submission}
+After detailed comparative evaluation, XGBoost was selected as the final model for test predictions and Kaggle submission due to its superior accuracy, robustness to noise, and balanced trade-off between bias and variance.
+
+The model was retrained on the full training dataset (including validation data) using the best-found hyperparameters and then used to predict on the unseen Kaggle test set.
+The final submission accuracy recorded on the leaderboard was consistent with the internal validation score, confirming the model’s reliability.
+
+
+\section{Key Insights and Learnings}\label{sec:key-insights-and-learnings}
+
+\begin{itemize}
+    \item The inclusion of SMOTE-based oversampling improved model performance by ~3\%, particularly enhancing recall for minority classes.
+    \item Removing outliers initially appeared to stabilize distributions but later reduced model generalization, reaffirming the importance of retaining certain noisy patterns for realistic data behavior.
+    \item Feature transformations like Box-Cox significantly improved data normality and model interpretability for linear models.
+    \item Ensemble-based learners, especially gradient boosting frameworks, proved highly effective for this dataset, indicating that non-linear relationships between lifestyle habits and cardiovascular risk factors were key predictive elements.
+\end{itemize}
+

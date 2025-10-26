@@ -24,18 +24,26 @@ The presence of a large proportion of outliers suggests potential issues in the 
 However, dropping or imputing such a large portion of data would not be recommended, as it could lead to the loss of valuable variance and distort the underlying population structure.
 Instead of aggressively removing these data points, a more balanced approach was adopted to preserve data diversity while improving model generalization.
 
-To address class imbalance and enhance the dataset’s representativeness, oversampling using the Synthetic Minority Oversampling Technique (SMOTE) was applied.
-This technique increased the total number of samples from approximately 15,000 to 20,000, effectively improving the model’s ability to learn from minority classes.
-Interestingly, even for the best-performing model— XGBoost—SMOTE contributed to nearly a 3\% improvement in accuracy, indicating that data balancing played a crucial role in enhancing classification performance.
+To address class imbalance and enhance the dataset’s representativeness, oversampling using the \textbf{Synthetic Minority Oversampling Technique (SMOTE)} was applied.
+This technique increased the total number of samples from approximately \textbf{15,000 to 20,000}, effectively improving the model’s ability to learn from minority classes.
+Interestingly, even for the best-performing model- XGBoost-SMOTE contributed to nearly a \textbf{3\% improvement in accuracy}, indicating that data balancing played a crucial role in enhancing classification performance.
 
 Although experiments were conducted by removing extreme outliers and retraining the models, the results showed a decline in generalization capability.
 The models trained on the cleaned dataset performed well on training data but failed to maintain consistent accuracy on validation and test sets.
 This behavior suggested that the apparent outliers might, in fact, carry meaningful variations essential for capturing the inherent noise and diversity within the dataset.
 
-Moreover, it is important to note that the Obesity–CVD Risk dataset used in this project was itself derived through oversampling and controlled noise addition to an original dataset of around 2,000 data points.
+Moreover, it is important to note that the \textbf{Obesity–CVD Risk} \textbf{dataset} used in this project was itself derived through \textbf{oversampling and controlled noise addition} to an original dataset of around \textbf{2,000 data points}.
 Therefore, a certain degree of randomness and non-uniformity in feature distributions was expected.
 These artificial augmentations were introduced to expand the dataset and prevent overfitting during model training.
 Consequently, preserving mild outlier behavior aligned with the dataset’s generative nature and ensured that the model learned to handle noisy, realworld data effectively.
+
+%----------------------------------------------------------------
+
+
+\section{Duplication Detection}\label{sec:duplication-detection}
+\importTableFigure{"tables/data_eda_duplicate_counts.csv"}{Duplicates Counts}{data_eda_duplicate_counts}
+\textbf{Observation:} There is not a single duplicate value in any of the columns.\\
+\textbf{Inference:} The dataset has no multi collinearity and requires noo further processing.
 
 %----------------------------------------------------------------
 
@@ -108,6 +116,40 @@ This implies data variance primarily arises from behavioral rather than physical
 \textit{Weight} and \textit{Age} are the most outlier-sensitive variables and will require focused treatment in the preprocessing phase.
 \textit{Height} and other features remain largely robust.
 
+%----------------------------------------------------------------
+
+
+\section{Correlation Matrix}\label{sec:correlation-matrix}
+\importPlotFigure{figures/plot_Correlation Matrix Main Dataset.png}{Correlation Matrix}{correlation}
+
+\textbf{Observation:} Weight shows strong positive correlations with height and age, and naturally increases with the weight category.
+Height is negatively correlated with being female, indicating that females tend to be shorter.
+Individuals without a family history of overweight generally weigh less.
+Age is negatively related to physical activity, calorie intake, and technology use, suggesting that older individuals are less active and spend less time on screens.
+Physical activity is higher among younger and taller individuals.
+Females show slightly higher vegetable consumption, reflecting healthier eating patterns.
+
+\textbf{Inference:}
+\begin{itemize}
+    \item Age and lifestyle: Older individuals appear less active and engage less in screen time.
+    \item Gender differences: Females are shorter, more likely to eat vegetables, and less physically active on average.
+    \item Weight factors: Weight is primarily driven by height and family history of overweight.
+    \item Health behavior: Higher physical activity (FAF) links to lower weight and younger age.
+    \item Diet correlation: Vegetable consumption is not strongly tied to weight but shows mild gender trends.
+\end{itemize}
+
+%----------------------------------------------------------------
+
+
+\section{Principal Components}\label{sec:principal-components}
+\importPlotFigure{figures/plot_3D PCA Projection.png}{Principal Components}{pca}
+
+\textbf{Observation:}
+The PCA projection shows a large degree of overlap among most classes, with no clearly separated clusters.
+Categories such as Normal Weight, Overweight, and Obesity Types appear to blend into one another, indicating that their feature distributions are similar in the reduced 3D space.
+
+\textbf{Inference:} This overlap suggests that the variables contributing to weight classification are continuous and interrelated, making sharp boundaries between classes difficult to capture with PCA. It also implies that while PCA captures overall variance, it may not fully separate weight categories-nonlinear methods (e.g., t-SNE or UMAP) might reveal clearer class distinctions.
+)
 %----------------------------------------------------------------
 
 

@@ -1,1 +1,114 @@
-\chapter{Results}
+\chapter{Results and Discussion}\label{ch:results}
+The experimentation phase of this project yielded several meaningful insights into both the dataset characteristics and the relative strengths of different machine learning models when applied to obesity and cardiovascular disease (CVD) risk prediction.
+Beyond raw accuracy figures, the results reveal important relationships between data preprocessing techniques, model complexity, and generalization performance.
+
+
+\section{Quantitative Results}\label{sec:quantitative-results}
+
+The comparative analysis of multiple models provided a clear performance hierarchy, highlighting the effectiveness of ensemble-based methods in capturing complex non-linear dependencies within the dataset.
+
+\importTableFigure{tables/data_res_model_perf_comparison.csv}{Model Performance Compasrison}{data_res_model_perf_comparison}
+
+(Values represent the mean accuracy across stratified 5-folds and final held-out test evaluations.)
+
+The XGBoost classifier achieved the highest accuracy of 93.2\%, outperforming all other algorithms.
+LightGBM followed closely with 92.6\%, while Random Forest remained competitive at 90.6\%.
+These results underscore the strength of boosting-based methods in handling structured, moderately noisy tabular data.
+
+\importPlotFigure{figures/plot_Model Accuracy Comparison.png}{Model Accuracy Comparison}{model_accuracy_comparison}
+
+
+\section{Impact of Preprocessing and Feature Engineering}\label{sec:impact-of-preprocessing-and-feature-engineering}
+
+One of the most significant findings of this project concerns the effect of data preprocessing and feature engineering on model performance.
+The results demonstrate that even relatively minor transformations substantially influence downstream model behavior:
+
+\textbf{Box-Cox Transformation:}\\
+Among several tested transformations (logarithmic, square root, Box-Cox), the Box-Cox transformation yielded the most symmetric and approximately Gaussian distribution for features such as Age, NCP, FCVC, and CH2O.
+This normalization improved the convergence and stability of linear models like logistic regression, leading to an increase of roughly 2–3\% in accuracy over the untransformed version.
+
+\textbf{Outlier Handling:}\\
+Experiments with outlier removal initially improved data distribution symmetry but negatively affected model generalization.
+Given that the dataset itself was synthetically expanded from 2,000 to 15,000 samples (and further to 20,000 using SMOTE), a degree of inherent noise was expected.
+Retaining these “noisy” samples allowed the model-particularly ensemble-based learners-to better capture variability representative of real-world populations.
+
+\textbf{Oversampling using SMOTE:}\\
+Synthetic Minority Oversampling Technique (SMOTE) was instrumental in balancing class distributions.
+Oversampling from 15,000 to 20,000 samples enhanced the model’s robustness and improved the F1-score and recall metrics for underrepresented risk categories.
+Notably, even the best-performing model, XGBoost, saw an approximate 3\% increase in accuracy after SMOTE was applied, demonstrating the utility of synthetic sample generation in health-related datasets where imbalance is common.
+
+\textbf{Feature Encoding:}\\
+Encoding choices were aligned with model architectures-One-Hot Encoding for linear models and Label Encoding for tree-based ones.
+This separation ensured each model family received inputs in the most compatible numerical representation.
+Tree-based learners like XGBoost and LightGBM handled categorical labels efficiently due to their split-based nature, while logistic regression benefited from the interpretability of one-hot encoded vectors.
+
+
+\section{Model Behavior and Interpretations}\label{sec:model-behavior-and-interpretations}
+
+The project findings highlight that model architecture directly influences how effectively the relationships between lifestyle, dietary, and behavioral attributes are captured.
+
+\textbf{Linear Models (Logistic Regression):}\\
+These models performed adequately but failed to capture the intricate non-linear dependencies between obesity indicators (such as BMI, caloric intake, and activity level) and CVD risk.
+Despite their simplicity and interpretability, their predictive limits were evident.
+
+\textbf{Tree-Based Models:}\\
+Decision trees, while interpretable, were prone to overfitting and instability under small perturbations.
+Random Forest mitigated this through ensembling, producing smoother decision boundaries and improved robustness.
+
+\textbf{Boosting Algorithms (XGBoost, LightGBM, AdaBoost):}\\
+These methods outperformed all others by sequentially correcting previous errors and learning higher-order interactions.
+Their gradient-based optimization allowed efficient handling of mixed feature types, outliers, and mild noise.
+XGBoost’s regularization mechanisms (lambda and alpha parameters) further reduced overfitting risk, making it the most generalizable model in this study.
+
+\textbf{Instance-Based and Probabilistic Models:}\\
+KNN and Naïve Bayes showed limited scalability and generalization.
+KNN was sensitive to the choice of distance metric and value of k, while Naïve Bayes’s independence assumption proved unrealistic for this multivariate health dataset.
+
+
+\section{Evaluation Metrics Beyond Accuracy}\label{sec:evaluation-metrics-beyond-accuracy}\
+
+Although overall accuracy served as the primary metric, other measures provided additional insights:
+
+\textbf{Precision and Recall:}\\
+SMOTE notably improved recall for minority classes, reflecting better sensitivity toward high-risk individuals-a crucial factor in healthcare prediction models.
+
+\textbf{F1-Score:}\\
+Balancing precision and recall, F1-scores consistently improved after oversampling and feature normalization, showing that the models not only improved accuracy but also fairness in class prediction.
+
+\textbf{ROC-AUC Curves:}\\
+ROC curves for the top models (Random Forest, LightGBM, XGBoost) showed AUC values above 0.95, suggesting high discriminative power and reliable ranking of risk probabilities.
+
+\importPlotFigure{figures/plot_Metric Comparison over Top Models.png}{Metric Comparison over Top Models}{metric_comparison}
+
+These results collectively demonstrate that the predictive pipeline is not only statistically sound but also meaningful in a health-data context, where misclassification costs may be asymmetric.
+
+
+\section{Discussion of Findings}\label{sec:discussion-of-findings}
+
+The findings align well with theoretical expectations and practical experiences from prior literature on health-risk modeling:
+
+\textbf{Importance of Non-linearity:}\\
+Cardiovascular risk is influenced by complex interactions among behavioral, physiological, and demographic factors.
+Linear models oversimplify these relationships, while tree-based ensembles efficiently capture such dependencies.
+
+\textbf{Noise and Realism:}\\
+Retaining outliers, despite appearing statistically undesirable, introduced beneficial noise that helped models generalize better.
+This supports the hypothesis that mild irregularities in data can represent realistic patient-level variation rather than mere errors.
+
+\textbf{Synthetic Data and Bias:}\\
+Since the dataset originated from a smaller base sample of around 2,000 entries, followed by noise addition and synthetic expansion, it inherently contains correlated and non-independent observations.
+The success of ensemble learners in this setting demonstrates their robustness to mild data imperfections and sampling bias.
+
+\textbf{Computational Efficiency vs. Accuracy:}\\
+While LightGBM offered faster training with near-identical accuracy to XGBoost, the latter provided marginally better calibration and consistency across folds, justifying its selection for final submission.
+
+
+\section{Limitations}\label{sec:limitations}
+
+Despite the encouraging results, several limitations were observed:
+
+The dataset, though diverse, is synthetically extended and may not fully represent real-world population variance.
+
+The project relied on accuracy-based evaluation; real clinical models may demand cost-sensitive or risk-weighted metrics.
+
+Model interpretability for complex ensembles remains limited despite high predictive power, suggesting future work could integrate explainable AI (XAI) methods such as SHAP or LIME for transparency.

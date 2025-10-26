@@ -1,9 +1,21 @@
-Model, Cross-Validation Accuracy (%), Validation Accuracy (%), Test Accuracy (%)
-Logistic Regression, 82.6, 83.1, 82.4
-Decision Tree, 85.3, 86.0, 85.2
-Random Forest, 90.1, 91.4, 90.6
-AdaBoost, 88.8, 89.3, 89.1
-KNN, 86.9, 87.5, 86.7
-NaÃ¯ve Bayes, 81.7, 82.0, 81.9
-LightGBM, 92.4, 92.8, 92.6
-XGBoost, 93.1, 93.4, 93.2
+Model Name,Validation Accuracy
+Simple Logistic Regression,87.8
+Grid Search Logistic Regression,87.7
+Simple Polynomial Regression,85.97
+Grid Search Polynomial Regression,85.89
+Simple Decision Tree,86.87
+Grid Search Decision Tree,87.98
+Simple AdaBoost,71.18
+Grid Search AdaBoost,87.49
+Simple Random Forest,89.63
+Grid Search Random Forest,90.06
+Simple XgBoost,89.82
+Grid Search XgBoost,90.9
+Optuna + XgBoost,91.1
+Simple LightGBM,89.92
+Grid Search LightGBM,90.9
+Optuna + LightGBM,90.6
+Simple KNN,83.09
+Grid search KNN,85.7
+Simple Naïve Bayes,72.45
+Grid Search Naïve Bayes,75.61

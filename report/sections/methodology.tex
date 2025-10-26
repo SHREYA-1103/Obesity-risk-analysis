@@ -20,11 +20,10 @@ Lastly, leveraging lessons from earlier projects, the implementation maintains r
 
 
 \section{Dataset Description}\label{sec:dataset-description}
-The data loading phase follows a straightforward and minimal approach.
-The primary dataset is loaded into {ds_source}, and the submission dataset into {ds_test}.
-An additional preprocessing step involves renaming the column family_history_with_overweight to FHWO, aligning it with the naming convention of other acronym-based attributes.
+The data loading process follows a straightforward and minimal approach.  
+The primary dataset is loaded into \texttt{ds\_source}, while the submission dataset is loaded into \texttt{ds\_test}.  
+An additional preprocessing step involves renaming the column \texttt{family\_history\_with\_overweight} to \texttt{FHWO}, aligning it with the acronym-based naming convention used for other attributes.  
 This minor modification simplifies table formatting, improves readability, and ensures consistency across visualizations and statistical summaries.
-The primary dataset is loaded into \texttt{\{ds\_source\}} and the submission dataset into \texttt{\{ds\_test\}}.
 
 
 \section{Exploratory Data Analysis (EDA)}\label{sec:exploratory-data-analysis}
@@ -35,8 +34,8 @@ A variety of plots and statistical summaries are generated to ensure a comprehen
 Care is taken to emphasize interpretability - each visualization contributes directly to understanding the dataset’s behavior and influences the decisions made during feature engineering and preprocessing.
 
 
-\section{Feature Engineering & Preprocessing}\label{sec:data-preprocessing}
-The feature engineering and preprocessing stage forms the backbone of the entire modeling workflow, translating raw data into structured, meaningful representations suitable for machine learning algorithms.
+\section{Data Preprocessing & Feature Engineering}\label{sec:data-preprocessing}
+The data preprocessing & feature engineering stage forms the backbone of the entire modeling workflow, translating raw data into structured, meaningful representations suitable for machine learning algorithms.
 All transformations applied at this stage are informed by insights drawn from the exploratory data analysis (EDA). Rather than mutating the original data source, the transformations are encapsulated within modular units known as Pipeline Operations (POPs), which maintain full traceability and reversibility of each preprocessing step.
 
 \subsection{Transformation Strategy}\label{subsec:transformation-strategy}
@@ -52,7 +51,7 @@ For the Age attribute, the Box–Cox transformation yielded the most statistical
 
 For Weight, none of the tested transformations led to a significant improvement in distribution symmetry; thus, the original scale was retained.
 
-These transformations were validated through post-transformation histograms, Q–Q plots, and normality tests to ensure stability before being incorporated into the final pipeline.
+These transformations were validated through post-transformation histograms to ensure stability before being incorporated into the final pipeline.
 
 \textbf{Categorical Transformations}
 
@@ -60,7 +59,7 @@ The dataset contained multiple categorical features, each influencing the model 
 To accommodate this, dual-encoding strategies were applied:
 
 For linear models such as Logistic Regression, categorical variables were One-Hot Encoded (OHE) to maintain orthogonality and prevent unintended ordinal relationships.
-Additionally, a specialized soft one-hot encoding (soft OHE) technique was applied to features like CH₂O, which exhibited discrete peaks within a continuous range.
+Additionally, a specialized soft one-hot encoding (soft OHE) technique was applied to features like CH2O, which exhibited discrete peaks within a continuous range.
 
 For tree-based models such as Decision Tree, Random Forest, XGBoost, and LightGBM, categorical features were Label Encoded, preserving computational efficiency and minimizing feature dimensionality.
 
@@ -78,7 +77,7 @@ Water\_Intake\_per\_Meal – Derived from CH₂O and NCP to approximate hydratio
 
 Activity\_to\_Tech\_Ratio – Ratio of physical activity levels to technology usage time, representing lifestyle balance.
 
-Healthy\_Lifestyle\_Score – Weighted aggregate of positive lifestyle indicators such as high FCVC, adequate CH₂O, and regular physical activity.
+Healthy\_Lifestyle\_Score – Weighted aggregate of positive lifestyle indicators such as high FCVC, adequate CH2O, and regular physical activity.
 
 Has\_FamilyRisk\_and\_FAVC – Interaction feature capturing the combined impact of genetic predisposition and high-calorie food consumption.
 
@@ -191,8 +190,6 @@ Linear models (Logistic Regression, KNN, Naive Bayes): using OHE-transformed dat
 
 Tree-based models (Decision Tree, Random Forest, AdaBoost, XGBoost, LightGBM): using label-encoded datasets.
 
-\importPlotFigure{figures/plot_Feature Distribution (Discrete).png}{Discrete Features Distribution}{feature_distribution_discrete}
-
 \subsection{Model Selection and Training}\label{subsec:model-selection-and-training}
 A diverse suite of models was implemented to evaluate various learning paradigms:
 
@@ -230,4 +227,4 @@ Additional metrics such as precision, recall, F1-score, and confusion matrix wer
 
 Each model’s predictions were also validated on a separate Kaggle submission dataset, ensuring the robustness of the trained models on unseen data.
 
-The best accuracy of 93.2\% was achieved using XGBoost, followed closely by LightGBM, both of which benefited from the rich feature set, proper handling of categorical encodings, and SMOTE-based class balance.
+The best va;idation accuracy of 91.1\% was achieved using XGBoost, followed closely by LightGBM, both of which benefited from the rich feature set, proper handling of categorical encodings, and SMOTE-based class balance.

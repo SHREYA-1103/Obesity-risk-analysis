@@ -1,7 +1,7 @@
-\chapter{Feature Engineering}\label{ch:feature-engineering}
+\chapter{Data Preprocessing & Feature Engineering}\label{ch:feature-engineering}
 
 
-Feature engineering is one of the most crucial stages in the machine learning pipeline, as it directly influences how effectively models can learn patterns and relationships from the data.
+This is one of the most crucial stages in the machine learning pipeline, as it directly influences how effectively models can learn patterns and relationships from the data.
 This process involves transforming raw features into formats that enhance model interpretability, reduce bias, and improve predictive performance.
 In this project, several transformations were applied to handle skewed numerical variables, encode categorical variables, and ensure that both linear and tree-based models received data in the most suitable form for training.
 
@@ -45,14 +45,14 @@ These features required encoding before being passed to machine learning models,
 Given the differences in how various algorithms interpret feature relationships, two distinct encoding strategies were employed-one for linear models and another for tree-based models:
 
 \begin{description}
-    \item[\textbf{For Linear Models (e.g., Logistic Regression):}]
-    Linear models rely on distance-based calculations and assume linearity between predictors and target variables.
+    \item[\textbf{For Linear Models:}]
+    Linear models (including Regression-based, Distance-based and PRobability-based models) rely on distance-based calculations and assume linearity between predictors and target variables.
     To prevent the model from incorrectly inferring ordinal relationships among categories, One-Hot Encoding (OHE) was applied.
     In this encoding scheme, each category of a variable is converted into a separate binary feature, ensuring that no ordinal bias is introduced.
     Although OHE increases dimensionality, it allows the model to learn independent effects of each category accurately.
     After encoding, numerical features were standardized using StandardScaler to normalize feature magnitudes.
 
-    \item[\textbf{For Tree-Based Models (e.g. Decision Tree, Random Forest, XGBoost, LightGBM, AdaBoost):}]
+    \item[\textbf{For Tree-Based Models:}]
     Tree-based models are inherently insensitive to monotonic transformations and do not assume linear relationships between input features.
     Therefore, Label Encoding was employed for categorical variables in these models.
     Label Encoding assigns a unique integer to each category, which the model interprets as a discrete split criterion rather than a numerical ranking.
@@ -126,4 +126,4 @@ The dual-encoding approach optimized categorical variable handling across differ
 Additionally, careful evaluation of derived features helped maintain a balance between model complexity and generalization ability.
 
 Through these systematic transformations, the dataset was effectively prepared for model training and validation, laying the foundation for robust and high-performing predictive models.
-The improvements achieved during this stage were reflected in the final results, where optimized feature representation contributed to a remarkable increase in accuracy, culminating in the XGBoost model achieving 93.2\% accuracy on test data.
+The improvements achieved during this stage were reflected in the final results, where optimized feature representation contributed to a remarkable increase in accuracy, culminating in the XGBoost model achieving 99\% accuracy on test data.

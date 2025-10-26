@@ -41,9 +41,9 @@ Consequently, preserving mild outlier behavior aligned with the dataset’s gene
 
 
 \section{Duplication Detection}\label{sec:duplication-detection}
-\importTableFigure{"tables/data_eda_duplicate_counts.csv"}{Duplicates Counts}{data_eda_duplicate_counts}
-\textbf{Observation:} There is not a single duplicate value in any of the columns.\\
-\textbf{Inference:} The dataset has no multi collinearity and requires noo further processing.
+% \importTableFigure{"tables/data_eda_duplicate_counts.csv"}{Duplicates Counts}{data_eda_duplicate_counts}
+\textbf{Observation:} There is not even a single duplicate row in the dataset.\\
+\textbf{Inference:} The dataset is clean in this regard and there is no need to drop any of the rows.
 
 %----------------------------------------------------------------
 
@@ -149,7 +149,7 @@ The PCA projection shows a large degree of overlap among most classes, with no c
 Categories such as Normal Weight, Overweight, and Obesity Types appear to blend into one another, indicating that their feature distributions are similar in the reduced 3D space.
 
 \textbf{Inference:} This overlap suggests that the variables contributing to weight classification are continuous and interrelated, making sharp boundaries between classes difficult to capture with PCA. It also implies that while PCA captures overall variance, it may not fully separate weight categories-nonlinear methods (e.g., t-SNE or UMAP) might reveal clearer class distinctions.
-)
+
 %----------------------------------------------------------------
 
 

@@ -17,6 +17,15 @@ This approach helped mitigate issues of overfitting and provided a more stable m
 
 Given the moderate size of the dataset (approximately 15,000 samples, later expanded to 20,000 via SMOTE), the computational cost remained feasible, allowing multiple models to be trained and compared systematically.
 
+\section{Data Pipelining}\label{sec:data_pipelining}
+To ensure robust training and evaluation, separate data pipelines were prepared, each for Regression-based models (Logistic Regressiona nd Polynomial Regression), Tree-based models (Decision Trees, Random Forests, AdaBoost, XGBoost and LightGBM), Distance-based models (K-Nearest Neighbors) and Probility-based models (Naive Bayes).
+
+\importPlotFigure{figures/plot_regression_pipeline.png}{Regression Pipelines Comparision}{regression_pipeline}
+\importPlotFigure{figures/plot_tree_pipeline.png}{Tree Pipelines Comparision}{tree_pipeline}
+\importPlotFigure{figures/plot_distance_pipeline.png}{Distance Pipelines Comparision}{distance_pipeline}
+\importPlotFigure{figures/plot_probability_pipeline.png}{Probability Pipelines Comparision}{pobability_pipeline}
+
+Based on this analysis, for regression-based models box-cox transformation on Age, standard scaling of numerical columns and One-hot encoding of categorical columns were selected as the final pipeline operations. For tree-based models, box-cox transformation on Age, standard scaling of numerical columns and Label encoding of categorical columns were selected. For distance-based models, no operation was required and for probability-based models derived features coupled with standard scaling of numerical features gave the best results.
 
 \section{Model Selection Strategy}\label{sec:model-selection-strategy}
 The project adopted a comparative modeling framework, where diverse algorithms were evaluated under a consistent preprocessing setup.

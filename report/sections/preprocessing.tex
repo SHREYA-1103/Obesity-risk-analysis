@@ -1,4 +1,4 @@
-\chapter{Data Preprocessing & Feature Engineering}\label{ch:feature-engineering}
+\chapter{Data Preprocessing \& Feature Engineering}\label{ch:feature-engineering}
 
 
 This is one of the most crucial stages in the machine learning pipeline, as it directly influences how effectively models can learn patterns and relationships from the data.
@@ -15,24 +15,33 @@ Skewed data can adversely affect models, especially linear algorithms such as Lo
 Therefore, to improve normality and stabilize variance, various mathematical transformations were tested on these features, including logarithmic, square root, and Box–Cox transformations.
 
 For the Age attribute, all three transformation methods were applied, and their effects on the distribution were analyzed using histograms and Q–Q plots.
-The Box–Cox transformation produced the most symmetric and approximately normal distribution, significantly reducing skewness compared to log and square root transformations.
-Therefore, the Box–Cox transformation was selected for Age as the optimal approach.
-In contrast, for Weight, none of the applied transformations (log, square root, or Box– Cox) resulted in substantial improvement in distribution or model performance.
+The Box-Cox transformation produced the most symmetric and approximately normal distribution, significantly reducing skewness compared to log and square root transformations.
+Therefore, the Box-Cox transformation was selected for Age as the optimal approach.
+In contrast, for Weight, none of the applied transformations (log, square root, or Box-Cox) resulted in substantial improvement in distribution or model performance.
 Since the weight feature already had a relatively stable and less skewed distribution, it was retained in its original form to preserve interpretability and avoid unnecessary distortion of values.
-Mathematically, the Box–Cox transformation can be defined as:
+Mathematically, the Box-Cox transformation can be defined as:
+
+% \begin{equation}
+%     \centering
+%     x^\prime=\ \left\{
+%                    \begin{matrix}
+%                        \frac{x^\lambda}{\lambda}&if\ \lambda\neq0\\
+%                        \ln\funcapply(x) &if\ \lambda=0\\
+%                    \end{matrix}\right.
+%     \label{eq:eq_box_cox}
+% \end{equation}
 
 \begin{equation}
-    \centering
-    x^\prime=\ \left\{
-                   \begin{matrix}
-                       \frac{x^\lambda}{\lambda}&if\ \lambda\neq0\\
-                       \ln\funcapply(x)&if\ \lambda=0\\
-                   \end{matrix}\right.
-    \label{eq:eq_box_cox}
+x^\prime =
+\begin{cases}
+\dfrac{x^\lambda}{\lambda}, & \text{if } \lambda \neq 0,\\[1mm]
+\ln(x), & \text{if } \lambda = 0.
+\end{cases}
+\label{eq:eq_box_cox}
 \end{equation}
 
 where $x$ represents the feature value and 𝜆is a parameter determined through maximum likelihood estimation that minimizes skewness.
-This transformation is particularly advantageous because it dynamically adapts to the data’s distribution rather than applying a fixed transformation across all variables.
+This transformation is particularly advantageous because it dynamically adapts to the data's distribution rather than applying a fixed transformation across all variables.
 
 %----------------------------------------------------------------
 
@@ -46,7 +55,7 @@ Given the differences in how various algorithms interpret feature relationships,
 
 \begin{description}
     \item[\textbf{For Linear Models:}]
-    Linear models (including Regression-based, Distance-based and PRobability-based models) rely on distance-based calculations and assume linearity between predictors and target variables.
+    Linear models (including Regression-based, Distance-based and Probability-based models) rely on distance-based calculations and assume linearity between predictors and target variables.
     To prevent the model from incorrectly inferring ordinal relationships among categories, One-Hot Encoding (OHE) was applied.
     In this encoding scheme, each category of a variable is converted into a separate binary feature, ensuring that no ordinal bias is introduced.
     Although OHE increases dimensionality, it allows the model to learn independent effects of each category accurately.
@@ -109,7 +118,7 @@ To maintain an efficient and organized workflow, two separate datasets were prep
 
     \item \textbf{Dataset B (for tree-based models such as XGBoost, LightGBM, Random Forest, and Decision Tree):}
     \begin{itemize}
-        \item Applied Box–Cox transformation to the same set of skewed numerical features.
+        \item Applied Box-Cox transformation to the same set of skewed numerical features.
         \item Label Encoded categorical variables.
         \item Retained numerical features in their scaled form for consistency. \\ This dataset was designed to preserve the hierarchical and non-linear interpretive capability of tree-based algorithms while reducing unnecessary dimensionality.
     \end{itemize}
@@ -121,9 +130,9 @@ To maintain an efficient and organized workflow, two separate datasets were prep
 \section{Summary of Feature Engineering Outcomes}\label{sec:summary-of-feature-engineering-outcomes}
 
 The feature engineering process significantly improved the quality and structure of the dataset, enabling better model learning and convergence.
-Box–Cox transformation successfully normalized skewed distributions, enhancing the performance of models sensitive to feature variance.
+Box-Cox transformation successfully normalized skewed distributions, enhancing the performance of models sensitive to feature variance.
 The dual-encoding approach optimized categorical variable handling across different algorithm types, ensuring both interpretability and computational efficiency.
 Additionally, careful evaluation of derived features helped maintain a balance between model complexity and generalization ability.
 
 Through these systematic transformations, the dataset was effectively prepared for model training and validation, laying the foundation for robust and high-performing predictive models.
-The improvements achieved during this stage were reflected in the final results, where optimized feature representation contributed to a remarkable increase in accuracy, culminating in the XGBoost model achieving 99\% accuracy on test data.
+The improvements achieved during this stage were reflected in the final results, where optimized feature representation contributed to a remarkable increase in accuracy, culminating in the XGBoost model achieving 93.27\% accuracy on test data.

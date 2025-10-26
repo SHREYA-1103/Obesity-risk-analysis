@@ -20,7 +20,7 @@ Lastly, leveraging lessons from earlier projects, the implementation maintains r
 
 
 \section{Dataset Description}\label{sec:dataset-description}
-The data loading process follows a straightforward and minimal approach.  
+The data loading process follows a straightforward and minimal approach.
 The primary dataset is loaded into \texttt{ds\_source}, while the submission dataset is loaded into \texttt{ds\_test}.  
 An additional preprocessing step involves renaming the column \texttt{family\_history\_with\_overweight} to \texttt{FHWO}, aligning it with the acronym-based naming convention used for other attributes.  
 This minor modification simplifies table formatting, improves readability, and ensures consistency across visualizations and statistical summaries.
@@ -34,8 +34,8 @@ A variety of plots and statistical summaries are generated to ensure a comprehen
 Care is taken to emphasize interpretability - each visualization contributes directly to understanding the dataset’s behavior and influences the decisions made during feature engineering and preprocessing.
 
 
-\section{Data Preprocessing & Feature Engineering}\label{sec:data-preprocessing}
-The data preprocessing & feature engineering stage forms the backbone of the entire modeling workflow, translating raw data into structured, meaningful representations suitable for machine learning algorithms.
+\section{Data Preprocessing \& Feature Engineering}\label{sec:data-preprocessing}
+The data preprocessing \& feature engineering stage forms the backbone of the entire modeling workflow, translating raw data into structured, meaningful representations suitable for machine learning algorithms.
 All transformations applied at this stage are informed by insights drawn from the exploratory data analysis (EDA). Rather than mutating the original data source, the transformations are encapsulated within modular units known as Pipeline Operations (POPs), which maintain full traceability and reversibility of each preprocessing step.
 
 \subsection{Transformation Strategy}\label{subsec:transformation-strategy}
@@ -47,7 +47,7 @@ Both numerical and categorical attributes undergo distinct transformation and en
 During distribution analysis, several continuous variables such as Age, NCP, CH₂O, and FCVC displayed moderate skewness and non-Gaussian patterns.
 To address this, multiple transformation techniques - logarithmic, square root, and Box–Cox transformations - were systematically tested.
 
-For the Age attribute, the Box–Cox transformation yielded the most statistically balanced distribution, effectively reducing skewness and improving normality, whereas the log and square root transformations provided minimal improvement.
+For the Age attribute, the Box-Cox transformation yielded the most statistically balanced distribution, effectively reducing skewness and improving normality, whereas the log and square root transformations provided minimal improvement.
 
 For Weight, none of the tested transformations led to a significant improvement in distribution symmetry; thus, the original scale was retained.
 
@@ -71,19 +71,19 @@ Beyond transformation, several derived features were engineered to capture laten
 These were designed based on domain intuition about obesity and cardiovascular risk factors.
 Derived features included:
 
-BMI – Calculated from height and weight to provide a normalized indicator of body composition.
+BMI -- Calculated from height and weight to provide a normalized indicator of body composition.
 
-Water\_Intake\_per\_Meal – Derived from CH₂O and NCP to approximate hydration behavior per meal.
+Water\_Intake\_per\_Meal -- Derived from CH₂O and NCP to approximate hydration behavior per meal.
 
-Activity\_to\_Tech\_Ratio – Ratio of physical activity levels to technology usage time, representing lifestyle balance.
+Activity\_to\_Tech\_Ratio -- Ratio of physical activity levels to technology usage time, representing lifestyle balance.
 
-Healthy\_Lifestyle\_Score – Weighted aggregate of positive lifestyle indicators such as high FCVC, adequate CH2O, and regular physical activity.
+Healthy\_Lifestyle\_Score -- Weighted aggregate of positive lifestyle indicators such as high FCVC, adequate CH2O, and regular physical activity.
 
-Has\_FamilyRisk\_and\_FAVC – Interaction feature capturing the combined impact of genetic predisposition and high-calorie food consumption.
+Has\_FamilyRisk\_and\_FAVC -- Interaction feature capturing the combined impact of genetic predisposition and high-calorie food consumption.
 
-Calorie\_Monitoring\_Interaction – Interaction between food frequency (FAF) and calorie monitoring (CAEC), approximating dietary awareness.
+Calorie\_Monitoring\_Interaction -- Interaction between food frequency (FAF) and calorie monitoring (CAEC), approximating dietary awareness.
 
-These engineered features significantly improved the feature space’s expressiveness and allowed models to capture nuanced behavioral and physiological interactions relevant to obesity and cardiovascular risk.
+These engineered features significantly improved the feature space's expressiveness and allowed models to capture nuanced behavioral and physiological interactions relevant to obesity and cardiovascular risk.
 
 \textbf{Scaling and Standardization}
 
@@ -93,8 +93,8 @@ For tree-based models, which are scale-invariant, raw or label-encoded data were
 
 \textbf{Oversampling and Data Balance}
 
-Given the class imbalance observed in obesity–CVD categories, Synthetic Minority Oversampling Technique (SMOTE) was used to generate synthetic minority samples\. The sample size increased from approximately 15,000 to 20,000.
-This significantly enhanced the model’s ability to recognize minority patterns, resulting in up to 3\% accuracy improvements in XGBoost, the best-performing model.
+Given the class imbalance observed in obesity-CVD categories, Synthetic Minority Oversampling Technique (SMOTE) was used to generate synthetic minority samples\. The sample size increased from approximately 15,000 to 20,000.
+This significantly enhanced the model's ability to recognize minority patterns, resulting in up to 3\% accuracy improvements in XGBoost, the best-performing model.
 
 All preprocessing operations were implemented as POPs, enabling modular combination, visualization, and reproducibility across experiments.
 
@@ -143,24 +143,24 @@ This modular approach enables quick mixing and matching of transformations, faci
 The POP infrastructure is supported by several helper functions designed to streamline experimentation and simplify configuration management.
 These include:
 
-\textbf{compose\_pop} – Combines multiple POPs into a single unified operation.
+\textbf{compose\_pop} - Combines multiple POPs into a single unified operation.
 
-\textbf{prepare\_pop} – Finalizes a POP by fixing its configuration parameters.
+\textbf{prepare\_pop} - Finalizes a POP by fixing its configuration parameters.
 
-\textbf{select\_pipeline\_variation} – Chooses the most promising pipeline configuration among various permutations.
+\textbf{select\_pipeline\_variation} - Chooses the most promising pipeline configuration among various permutations.
 
-\textbf{apply\_pipeline} – Applies a series of pipeline variations to the dataset and evaluates their effects.
+\textbf{apply\_pipeline} - Applies a series of pipeline variations to the dataset and evaluates their effects.
 
 Together, these functions ensure the infrastructure remains modular, scalable, and adaptive to multiple model setups.
 
 \subsection{Specialized POPs}\label{subsec:specialized-pops}
 Among the implemented transformations, two specialized POPs deserve particular mention:
 
-\textbf{pop\_soft\_ohe} – Performs a “soft” one-hot encoding for features exhibiting discrete peaks within an otherwise continuous distribution.
+\textbf{pop\_soft\_ohe} - Performs a “soft” one-hot encoding for features exhibiting discrete peaks within an otherwise continuous distribution.
 For example, in the CH₂O feature, distinct spikes occur at values 1, 2, and 3.
 This transformation isolates these regions, creating dedicated features that capture each peak more effectively.
 
-\textbf{pop\_derived\_features} – Generates higher-level derived features from existing columns.
+\textbf{pop\_derived\_features} - Generates higher-level derived features from existing columns.
 These engineered features capture latent relationships and health-related behavioral indicators such as:
 
 BMI
@@ -193,21 +193,21 @@ Tree-based models (Decision Tree, Random Forest, AdaBoost, XGBoost, LightGBM): u
 \subsection{Model Selection and Training}\label{subsec:model-selection-and-training}
 A diverse suite of models was implemented to evaluate various learning paradigms:
 
-Logistic Regression – Served as the baseline linear classifier, evaluated using regularization (L1, L2) and solver variations.
+Logistic Regression - Served as the baseline linear classifier, evaluated using regularization (L1, L2) and solver variations.
 
-Decision Tree Classifier – Provided interpretability and served as the foundation for ensemble models.
+Decision Tree Classifier - Provided interpretability and served as the foundation for ensemble models.
 
-Random Forest Classifier – Leveraged ensemble bagging to reduce variance and improve robustness.
+Random Forest Classifier - Leveraged ensemble bagging to reduce variance and improve robustness.
 
-AdaBoost Classifier – Introduced boosting-based iterative learning to handle hard-toclassify instances.
+AdaBoost Classifier - Introduced boosting-based iterative learning to handle hard-toclassify instances.
 
-K-Nearest Neighbors (KNN) – Captured local instance-based decision boundaries.
+K-Nearest Neighbors (KNN) - Captured local instance-based decision boundaries.
 
-Naive Bayes – Provided a probabilistic baseline assuming feature independence.
+Naive Bayes - Provided a probabilistic baseline assuming feature independence.
 
-XGBoost Classifier – Gradient boosting model optimized for speed and accuracy, offering strong generalization capability.
+XGBoost Classifier - Gradient boosting model optimized for speed and accuracy, offering strong generalization capability.
 
-LightGBM Classifier – Gradient boosting framework optimized for memory and computational efficiency.
+LightGBM Classifier - Gradient boosting framework optimized for memory and computational efficiency.
 \\ \\
 All models were trained on the training set and evaluated on the validation and test sets.
 
@@ -225,6 +225,6 @@ This hybrid tuning strategy balanced exploration and computational efficiency wh
 Model performance was primarily evaluated using accuracy, given the balanced dataset post-SMOTE.
 Additional metrics such as precision, recall, F1-score, and confusion matrix were used for detailed class-level analysis.
 
-Each model’s predictions were also validated on a separate Kaggle submission dataset, ensuring the robustness of the trained models on unseen data.
+Each model's predictions were also validated on a separate Kaggle submission dataset, ensuring the robustness of the trained models on unseen data.
 
 The best va;idation accuracy of 91.1\% was achieved using XGBoost, followed closely by LightGBM, both of which benefited from the rich feature set, proper handling of categorical encodings, and SMOTE-based class balance.

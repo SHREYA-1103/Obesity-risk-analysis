@@ -1,13 +1,11 @@
-\chapter{Abstract}\label{ch:abstract}
+% \chapter{Abstract}\label{ch:abstract}
 
-% TODO: Do we even want to keep it?
-%  If yes, better move it to title page
 
 This project focuses on developing a machine-learning-based predictive model to assess the risk of cardiovascular diseases (CVD) in individuals based on obesity-related factors.
-The study uses an Obesity–CVD Risk dataset containing both numerical and categorical health indicators.
+The study uses an Obesity-CVD Risk dataset containing both numerical and categorical health indicators.
 An extensive Exploratory Data Analysis (EDA) was conducted to understand the data distribution, detect and handle missing values and outliers, and identify relationships between features and the target variable.
-Box–Cox transformation was applied to normalize skewed numerical attributes such as Age while categorical variables were encoded appropriately-One-Hot Encoding for logistic regression and Label Encoding for tree-based models.
+Box-Cox transformation was applied to normalize skewed numerical attributes such as Age while categorical variables were encoded appropriately-One-Hot Encoding for logistic regression and Label Encoding for tree-based models.
 Oversampling using SMOTE was performed to address class imbalance.
-Feature engineering and transformation were followed by comparative model development using various algorithms, including Logistic Regression, Decision Tree, Random Forest, AdaBoost, K-Nearest Neighbors, Naïve Bayes, XGBoost, and LightGBM. Grid Search Cross-Validation was applied for hyperparameter optimization of most models, while Optuna was used for advanced tuning of XGBoost and LightGBM with Stratified K-Fold validation.
-Model performance was evaluated on a separate test dataset, where XGBoost achieved the highest accuracy of ~91.1\% on the validation dataset and ~99\% on the test dataset on Kaggle, demonstrating its strong predictive capability and robustness for health risk classification tasks.
+Feature engineering and transformation were followed by comparative model development using various algorithms, including Logistic Regression, Decision Tree, Random Forest, AdaBoost, K-Nearest Neighbors, Na\"ive Bayes, XGBoost, and LightGBM. Grid Search Cross-Validation was applied for hyperparameter optimization of most models, while Optuna was used for advanced tuning of XGBoost and LightGBM with Stratified K-Fold validation.
+Model performance was evaluated on a separate test dataset, where XGBoost achieved the highest accuracy of ~91.1\% on the validation dataset and ~93.2\% on the test dataset on Kaggle, demonstrating its strong predictive capability and robustness for health risk classification tasks.
 This study highlights the significance of feature transformation and advanced hyperparameter tuning in improving model performance for medical risk prediction, offering a scalable framework for preventive healthcare analytics.

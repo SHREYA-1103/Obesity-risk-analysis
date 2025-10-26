@@ -4,20 +4,67 @@
 
 \documentclass[12pt,a4paper]{report}
 
-% Load modular settings
+% =======================
+% FONTS
+% =======================
+\usepackage{fontspec}       
+\setmainfont{TeX Gyre Termes}
+
+% =======================
+% MODULAR SETTINGS
+% =======================
 \input{settings/packages}
 \input{settings/layout}
 \input{settings/header}
 \input{settings/macros}
 
+% =======================
+% BIBLIOGRAPHY
+% =======================
+\usepackage[backend=biber,style=ieee]{biblatex} % IEEE style
+\addbibresource{references.bib}
+
+% =======================
+% DOCUMENT
+% =======================
 \begin{document}
 
-    \input{sections/titlepage}
-    \input{sections/abstract}
+    % -----------------------
+    % Title Page
+    % -----------------------
+    {
+        \let\clearpage\relax
+        \input{sections/titlepage}
+    }
 
+    % -----------------------
+    % Abstract
+    % -----------------------
+    {
+        \let\clearpage\relax
+        \chapter*{Abstract}
+        \addcontentsline{toc}{chapter}{Abstract}
+        % \input{sections/abstract}
+        This project focuses on developing a machine-learning-based predictive model to assess the risk of cardiovascular diseases (CVD) in individuals based on obesity-related factors.
+        The study uses an Obesity-CVD Risk dataset containing both numerical and categorical health indicators.
+        An extensive Exploratory Data Analysis (EDA) was conducted to understand the data distribution, detect and handle missing values and outliers, and identify relationships between features and the target variable.
+        Box-Cox transformation was applied to normalize skewed numerical attributes such as Age while categorical variables were encoded appropriately-One-Hot Encoding for logistic regression and Label Encoding for tree-based models.
+        Oversampling using SMOTE was performed to address class imbalance.
+        Feature engineering and transformation were followed by comparative model development using various algorithms, including Logistic Regression, Decision Tree, Random Forest, AdaBoost, K-Nearest Neighbors, Na\"ive Bayes, XGBoost, and LightGBM. Grid Search Cross-Validation was applied for hyperparameter optimization of most models, while Optuna was used for advanced tuning of XGBoost and LightGBM with Stratified K-Fold validation.
+        Model performance was evaluated on a separate test dataset, where XGBoost achieved the highest accuracy of ~91.1\% on the validation dataset and ~93.2\% on the test dataset on Kaggle, demonstrating its strong predictive capability and robustness for health risk classification tasks.
+        This study highlights the significance of feature transformation and advanced hyperparameter tuning in improving model performance for medical risk prediction, offering a scalable framework for preventive healthcare analytics.
+
+    }
+
+    % -----------------------
+    % Table of Contents
+    % -----------------------
     \tableofcontents
     \newpage
 
+    % -----------------------
+    % Chapters
+    % -----------------------
     \input{sections/introduction}
     \input{sections/methodology}
     \input{sections/dataset}
@@ -25,22 +72,53 @@
     \input{sections/preprocessing}
     \input{sections/model_training}
     \input{sections/results}
-    \input{sections/conclusion}
 
-    \bibliographystyle{ieeetr}
-    \bibliography{references}
+    % -----------------------
+    % Conclusion
+    % -----------------------
+    {
+        \chapter*{Conclusion}
+        \addcontentsline{toc}{chapter}{Conclusion}
+        This project successfully demonstrated the application of a structured machine learning pipeline for predicting cardiovascular disease (CVD) risk based on obesity-related parameters.
+        Through systematic data exploration, feature engineering, and model evaluation, the study established a comprehensive framework that balances interpretability, performance, and robustness.
+
+        The results highlight that ensemble-based methods, particularly XGBoost, deliver the best predictive performance, achieving an accuracy of 93.27\% on the held-out test dataset.
+        This improvement was driven by careful preprocessing steps, including Box-Cox transformation for normalization, SMOTE-based oversampling for class balance, and appropriate encoding strategies for categorical variables.
+        The experiments also revealed that retaining certain outliers improved model generalization, reflecting the realistic variability of health-related data.
+
+        Comparative analyses confirmed that while linear models provided valuable interpretability, they lacked the flexibility to capture the complex non-linear interactions among features such as age, dietary habits, and activity levels.
+        Tree-based and boosting algorithms, on the other hand, effectively modeled these relationships and maintained robustness against noise.
+
+        In conclusion, this work demonstrates that thoughtfully engineered preprocessing combined with advanced ensemble learning can yield highly reliable health risk prediction models.
+        The findings underscore the potential of machine learning in preventive healthcare analytics and provide a foundation for future extensions, such as integrating explainability frameworks (e.g., SHAP or LIME) and testing the model on real-world clinical datasets to enhance its applicability and trustworthiness
+    }
+
+    % -----------------------
+    % References
+    % -----------------------
+    {
+        \chapter*{References}
+        \addcontentsline{toc}{chapter}{References}
+        \printbibliography
+
+        \vspace{1em}
+        \section*{Web Resources}
+        \addcontentsline{toc}{section}{Web Resources}
+
+        \begin{itemize}
+            \item \href{https://www.kaggle.com/datasets/irfanasrullah/obesity-levels}{Kaggle: Obesity Levels Dataset}
+            \item \href{https://www.kaggle.com/datasets/kalviumcommunity/obesity-cvd-risk}{Kaggle: Obesity and CVD Risk Dataset}
+            \item \href{https://optuna.org/}{Optuna: Hyperparameter Optimization Framework}
+            \item \href{https://xgboost.readthedocs.io/en/stable/}{XGBoost Official Documentation}
+            \item \href{https://lightgbm.readthedocs.io/en/latest/}{LightGBM Official Documentation}
+            \item \href{https://scikit-learn.org/stable/}{Scikit-learn Documentation}
+            \item \href{https://imbalanced-learn.org/stable/references/generated/imblearn.over_sampling.SMOTE.html}{SMOTE - Imbalanced-learn Documentation}
+            \item \href{https://pandas.pydata.org/docs/}{Pandas Documentation}
+            \item \href{https://numpy.org/doc/stable/}{NumPy Documentation}
+            \item \href{https://matplotlib.org/stable/contents.html}{Matplotlib Documentation}
+            \item \href{https://seaborn.pydata.org/}{Seaborn Documentation}
+            \item \href{https://docs.python.org/3/}{Python 3 Official Documentation}
+        \end{itemize}
+    }
 
 \end{document}
-
-
-
-
-
-
-
-
-
-
-
-
-
